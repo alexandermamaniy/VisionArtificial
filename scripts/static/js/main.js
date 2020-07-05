@@ -1,7 +1,7 @@
 'use strict';
 
 const numberOfBurstShot = 5;
-const apiURL = `http://192.168.1.4:5002`;
+const apiURL = `http://18.218.242.91:5002`;
   // const apiURL = `post.php`;
 
 var constraints = {
@@ -9,8 +9,8 @@ var constraints = {
   video: {
     width: { min: 1280 },
     height: { min: 720 },
-    //facingMode: { exact: "environment" } // Rear Camera
-    facingMode: "user" // Front Camera
+    facingMode: { exact: "environment" } // Rear Camera
+    //facingMode: "user" // Front Camera
   }
 }
 

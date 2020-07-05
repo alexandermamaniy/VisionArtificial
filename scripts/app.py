@@ -12,6 +12,9 @@ import random
 from PIL import Image
 from io import BytesIO
 import re, time, base64
+import signal
+
+#app = Flask(__name__, static_url_path='/static')
 
 def getI420FromBase64(codec, image_path="temp/"):
     base64_data = re.sub('^data:image/.+;base64,', '', codec)
@@ -33,8 +36,17 @@ def display_msg(request_obj, input_obj):
     except Exception as e:
         return jsonify({"Error": 'There was an error while processing your request. ' + str(e)})
 
+def my_teardown_handler(signal, frame):
+    """Sleeps for 3 seconds, then creates/updates a file named app-log.txt with the timestamp."""
+    sleep(3)
+    with open('app-log.txt', 'w') as f:
+        msg = ''.join(['The time is: ', str(time())])
+        f.write(msg)
+    sys.exit(0)
+
 # Web Server declaration.
 def flask_app():
+    signal.signal(signal.SIGTERM, my_teardown_handler)
     app = Flask(__name__, static_url_path='/static')
     CORS(app)
 
