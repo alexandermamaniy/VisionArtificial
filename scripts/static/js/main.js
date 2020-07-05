@@ -1,9 +1,10 @@
 'use strict';
 
 const numberOfBurstShot = 5;
-const apiURL = `http://18.218.242.91:5002`;
+const apiURL = 'https://artificial-vision-cbba.cf';
   // const apiURL = `post.php`;
 
+    
 var constraints = {
   audio: false,
   video: {
