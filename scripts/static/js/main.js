@@ -1,5 +1,37 @@
 'use strict';
 
+var artyomCommands = [
+  //Simple Command Example
+  {
+      indexes: ['cámara', 'Camara', 'camara', 'Cámara'],
+      action : reconocerCosas
+  },
+  //Continue adding your own commands here
+];
+
+artyom.addCommands(artyomCommands);
+
+(function startArtyom(){
+
+        //alert("incio O no")
+        console.log("inicio el microfono")
+        artyom.initialize({
+            lang: "es-ES",
+            continuous:true,// Reconoce 1 solo comando y para de escuchar
+                listen:true, // Iniciar !
+                debug:true, // Muestra un informe en la consola
+                speed:1 // Habla normalmente
+     });
+})();
+
+// Stop libreria;
+function stopArtyom(){
+    artyom.fatality();// Detener cualquier instancia previa
+};
+console.log(artyom.getAvailableCommands());
+
+
+
 const numberOfBurstShot = 5;
 const apiURL = 'https://artificial-vision-cbba.cf';
   // const apiURL = `post.php`;
@@ -10,8 +42,8 @@ var constraints = {
   video: {
     width: { min: 1280 },
     height: { min: 720 },
-    facingMode: { exact: "environment" } // Rear Camera
-    //facingMode: "user" // Front Camera
+    //facingMode: { exact: "environment" } // Rear Camera
+    facingMode: "user" // Front Camera
   }
 }
 
@@ -20,7 +52,7 @@ const canvas = window.canvas = document.querySelector('canvas');
 const captureButton = document.getElementById('capture_shot');
 const burstShotButton = document.getElementById('burst_shot');
 const inputTextBox = document.getElementById('text_to_speech');
-const findObject = document.getElementById("find_object");
+//const findObject = document.getElementById("find_object");
 const detectObject = document.getElementById("detect_object");
 const objectData = document.getElementById("object_data");
 
@@ -132,16 +164,19 @@ captureButton.onclick = function () {
   takeShot(inputData, 'train');
 };
 
+/*
 findObject.onclick = function() {
   text2SpeechLoop();
   takeShot('', "");
 };
+*/
 
-
-detectObject.onclick = function() {
+function reconocerCosas() {
   text2SpeechLoop();
   objectDetails();
 };
+
+detectObject.onclick = reconocerCosas;
 
 
 function handleSuccess(stream) {
